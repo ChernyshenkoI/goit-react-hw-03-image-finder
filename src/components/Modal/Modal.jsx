@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export const Modal = ({ img, descr, onClickCloseModal }) => {
+export const Modal = ({ img, description, onClickCloseModal }) => {
   return (
     <Overlay onClick={onClickCloseModal}>
       <ModalStyled>
-        <img src={img} alt={descr} />
+        <img src={img} alt={description} />
       </ModalStyled>
     </Overlay>
   );
@@ -14,7 +14,7 @@ export const Modal = ({ img, descr, onClickCloseModal }) => {
 
 Modal.propTypes = {
   img: PropTypes.string,
-  descr: PropTypes.string,
+  description: PropTypes.string,
   onClickCloseModal: PropTypes.func,
 };
 export const Overlay = styled.div`

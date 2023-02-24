@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { createPortal } from 'react-dom';
 import { API } from './API/API';
 
 import { SearchBar } from './Searchbar/Searchbar';
@@ -9,7 +8,6 @@ import { Modal } from './Modal/Modal';
 import { Button } from './Button/Button';
 
 const imgAPI = new API();
-const portalContainer = document.querySelector('#portal');
 
 export class App extends Component {
   state = {
@@ -39,7 +37,6 @@ export class App extends Component {
       isOpenModal: true,
       isLoading: true,
     });
-    window.addEventListener('keydown', this.onCloseModalByEsc);
     this.setState({ isLoading: false });
   };
 
@@ -47,7 +44,6 @@ export class App extends Component {
     if (e.key === 'Escape') {
       this.setState({ isOpenModal: false });
     }
-    window.removeEventListener('keydown', this.onCloseModal);
   };
 
   onClickCloseModal = e => {
@@ -76,20 +72,7 @@ export class App extends Component {
         this.setState({ isLoading: false });
       }
     }
-
-    // if (prevState.query !== query) {
-    //   this.setState({ isLoading: true });
-    //   try {
-    //     const { hits } = await imgAPI.fetchImgs(query, page);
-    //     this.setState({ images: hits });
-    //   } catch (error) {
-    //     console.log(error);
-    //   } finally {
-    //     this.setState({ isLoading: false });
-    //   }
-    // }
   }
-
   render() {
     return (
       <>
@@ -101,16 +84,14 @@ export class App extends Component {
         {this.state.images.length !== 0 && (
           <Button onLoadMore={this.onLoadMore} btnText="Load more..." />
         )}
-        {this.state.isOpenModal &&
-          createPortal(
-            <Modal
-              onClickCloseModal={this.onClickCloseModal}
-              img={this.state.largeImg}
-              description={this.state.description}
-            />,
-            portalContainer
-          )}
-        {this.state.isLoading && createPortal(<Loader />, portalContainer)}
+        {this.state.isOpenModal && (
+          <Modal
+            onClickCloseModal={this.onClickCloseModal}
+            img={this.state.largeImg}
+            description={this.state.description}
+          />
+        )}
+        {this.state.isLoading && <Loader />}
       </>
     );
   }

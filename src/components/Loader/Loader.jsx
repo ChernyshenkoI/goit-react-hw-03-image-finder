@@ -1,6 +1,7 @@
 import { Rings } from 'react-loader-spinner';
 import React from 'react';
-import { Overlay } from 'components/Modal/Modal';
+// import { Overlay } from 'components/Modal/Modal';
+import { Overlay } from './Styled';
 
 export const Loader = () => {
   return (

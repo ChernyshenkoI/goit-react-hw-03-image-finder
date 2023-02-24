@@ -65,7 +65,7 @@ export class App extends Component {
   async componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
     const { query } = this.state;
-    if (prevState.page !== page) {
+    if (prevState.page !== page || prevState.query !== query) {
       this.setState({ isLoading: true });
       try {
         const { hits } = await imgAPI.fetchImgs(query, page);
@@ -76,17 +76,18 @@ export class App extends Component {
         this.setState({ isLoading: false });
       }
     }
-    if (prevState.query !== query) {
-      this.setState({ isLoading: true });
-      try {
-        const { hits } = await imgAPI.fetchImgs(query, page);
-        this.setState({ images: hits });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.setState({ isLoading: false });
-      }
-    }
+
+    // if (prevState.query !== query) {
+    //   this.setState({ isLoading: true });
+    //   try {
+    //     const { hits } = await imgAPI.fetchImgs(query, page);
+    //     this.setState({ images: hits });
+    //   } catch (error) {
+    //     console.log(error);
+    //   } finally {
+    //     this.setState({ isLoading: false });
+    //   }
+    // }
   }
 
   render() {
@@ -105,7 +106,7 @@ export class App extends Component {
             <Modal
               onClickCloseModal={this.onClickCloseModal}
               img={this.state.largeImg}
-              descr={this.state.description}
+              description={this.state.description}
             />,
             portalContainer
           )}
